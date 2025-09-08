@@ -1,4 +1,7 @@
 import express from 'express';
+import dotenv from 'dotenv';
+import logToAffordmed from './controllers/log.js';
+import connectToMongoDB from './models/db.js';
 
 dotenv.config();
 
@@ -11,10 +14,7 @@ app.get('/', (req, res) => {
     res.status(200).send("server Started Path called");
 });
 
-app.use('/api/v1/books', bookRoutes);
-app.use('/api/v1/auth', authRoutes);
-
 
 app.listen(PORT, () => {
-    console.log(`server running on port ${PORT}`);
+    logToAffordmed("backend", 'info', 'server.js', `server running on port ${PORT}`);
 });
