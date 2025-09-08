@@ -12,9 +12,9 @@ export const connectToMongoDB = async () => {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-        logToAffordmed("backend", 'info', 'Mongodb.js', 'Connected to MongoDB successfully');
+        logToAffordmed("backend", 'info', 'db', 'Connected to MongoDB successfully');
     } catch (error) {
-        logToAffordmed("backend", 'error', 'Mongodb.js', `Error connecting to MongoDB: ${error.message}`);
+        logToAffordmed("backend", 'error', 'db', `Error connecting to MongoDB: ${error.message}`);
         process.exit(1); // Exit process with failure
     }
 };

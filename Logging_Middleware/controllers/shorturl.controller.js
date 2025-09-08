@@ -1,6 +1,6 @@
-import logToAffordmed from '../Logging/logMiddleware.js';
+import logToAffordmed from './log.js';
 import shortid from 'shortid';
-import ShortUrl from '../models/urlModel.js';
+import ShortUrl from '../model/url.model.js';
 
 
 export const createShortUrl = async (req, res) => {
@@ -30,7 +30,7 @@ export const createShortUrl = async (req, res) => {
 
     await logToAffordmed("backend", "info", "service", `Shortened URL created: ${code}`);
     res.status(201).json({
-      shortlink: `https://hostname:port/${code}`,
+      shortlink: `${process.env.BACKEND_URL}/${code}`,
       expiry: expiry.toISOString()
     });
   } catch (err) {
@@ -45,7 +45,7 @@ export const redirectToOriginal = async (req, res) => {
     const entry = await ShortUrl.findOne({ shortcode: code });
 
     if (!entry) {
-      await logToAffordmed("backend", "error", "router", "Shortcode not found");
+      await logToAffordmed("backend", "error", "route", "Shortcode not found");
       return res.status(404).json({ error: "Shortcode not found" });
     }
 
@@ -74,6 +74,7 @@ export const getUrlStats = async (req, res) => {
     const entry = await ShortUrl.findOne({ shortcode: code });
 
     if (!entry) {
+      await logToAffordmed("backend", "error", "route", "Shortcode not found");
       return res.status(404).json({ error: "Shortcode not found" });
     }
 
@@ -85,6 +86,7 @@ export const getUrlStats = async (req, res) => {
       analytics: entry.clicks
     });
   } catch (err) {
+    await logToAffordmed("backend", "error", "service", `Error fetching stats: ${err.message}`);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };

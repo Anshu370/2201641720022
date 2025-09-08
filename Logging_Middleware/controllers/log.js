@@ -20,7 +20,7 @@ async function logToAffordmed(stack, level, pkg, message) {
       {
         stack,
         level,
-        package: pkg,
+        "package": pkg,
         message
       },
       {
@@ -36,4 +36,4 @@ async function logToAffordmed(stack, level, pkg, message) {
   }
 }
 
-module.exports = { logToAffordmed };
+export default logToAffordmed;

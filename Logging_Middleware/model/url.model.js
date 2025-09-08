@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import clickSchema from './clickModel.js';
+import clickSchema from './urlClick.model.js';
 
 const urlSchema = new mongoose.Schema({
   originalUrl: { type: String, required: true },
